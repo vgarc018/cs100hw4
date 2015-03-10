@@ -11,13 +11,13 @@ The boost library `tokenizer` , takes a sequence such as a string, and parses it
 
  Notice how the `'` `,`and the `.` were ignored.
 
-**So how do we do this?**
+**So how do we do this?** 
  First, in order to use the tokenizer we'll have to include the boost tokenizer library:
-
+ 
 
     #include <boost/tokenizer.hpp>
     using namespace boost;
-
+    
 Of course, this is assuming you have boost downloaded onto your computer.  If you're using the hammer.cs.ucr.edu server it's already there, but otherwise check out [boost.org's getting started guide](http://www.boost.org/doc/libs/1_57_0/more/getting_started/unix-variants.html).
 
 So now that we have what we need, let's start coding.
@@ -27,7 +27,7 @@ So now that we have what we need, let's start coding.
     #include <boost/tokenizer.hpp>
     using namespace std;
     using namespace boost;
-
+    
     int main() {
 	    string str = "Don't panic, too much.";
 	    tokenizer<> mytok(str);
@@ -37,10 +37,10 @@ So now that we have what we need, let's start coding.
 	}
 Once compiled we will get the output that was shown above where the `'` `,` and the `.` were ignored.  In this example, in order to call the tokenizer, we declare `tokenizer<> mytok(str)`, where `str` is the parameter that you want to parse, and `mytok` is the name of your tokenizer.  And don't worry about what goes in <>, we'll get to that later.
 
-> Note: When compiling, you'll want to compile with `g++ -std=c++11` since we're using the `auto` feature that is included in the c++11 standard.  `auto`will automatically decide what data type your variable should be and since we have `auto it = tok.begin()`, `it` will become an iterator since `tok.begin() `returns an iterator.
->
-> If your compiler doesn't handle c++11 then you would have to replace `auto` with `tokenizer<>::iterator it`. Typing that all out kind of sucks, so I suggest using `auto` because it's pretty useful.  Don't worry, if you're using the CS100 machines, c++11 should work.
-
+> Note: When compiling, you'll want to compile with `g++ -std=c++11` since we're using the `auto` feature that is included in the c++11 standard.  `auto`will automatically decide what data type your variable should be and since we have `auto it = tok.begin()`, `it` will become an iterator since `tok.begin() `returns an iterator.  
+> 
+> If your compiler doesn't handle c++11 then you would have to replace `auto` with `tokenizer<>::iterator it`. Typing that all out kind of sucks, so I suggest using `auto` because it's pretty useful.  Don't worry, if you're using the CS100 machines, c++11 should work. 
+ 
 So here's another example of tokenizer to really drive it home:
 
     #include <iostream>
@@ -49,12 +49,12 @@ So here's another example of tokenizer to really drive it home:
     #include <boost/tokenizer.hpp>
     using namespace std;
     using namespace boost;
-
+    
     int main() {
 	    string str = "I'm getting pretty good at this.";
 	    vector<string> v;
 	    tokenizer<> tok(str);
-
+	    
 	    for(auto it = tok.begin(); it != tok.end(); ++it) {
 		    v.push_back(*it);
 		    cout << *it << ' ';
@@ -87,7 +87,7 @@ Now, we can make our own tokenizer function.  However, making our own delimiter 
 
     tok mytok(str, delim);
 where `mytok`is the name of our tokenizer, `str` is the thing we want to parse, and `delim` contains the stuff we want to ignore when parsing.
-
+ 
 So let's see how this would work in code:
 
     #include <iostream>
@@ -95,17 +95,17 @@ So let's see how this would work in code:
     #include <string>
     using namespace std;
     using namespace boost;
-
+    
     typedef tokenizer< char_separator<char> > tok;
-
+    
     int main() {
 	    string str = "CS&&&&100&is&really        amazing.";
 	    char_separator<char> delim("&");
 	    tok mytok(str, delim);
-
-	    for(auto it = mytok.begin(); it != mytok.end(); ++it)
+	    
+	    for(auto it = mytok.begin(); it != mytok.end(); ++it) 
 		    cout << "token: " << *it << endl;
-
+	
 	    return 0;
 	}
 Output:
@@ -117,11 +117,11 @@ Output:
 Notice how even though there were multiple `&`'s, all of them were ignored.  But wait, this still isn't exactly what we wanted, because now it's not ignoring spaces.  Recall that our delimiter was:
 
     char_separator<char> delim("&");
-We can actually put multiple characters into our delimiter.  So to get rid of spaces we would write:
+We can actually put multiple characters into our delimiter.  So to get rid of spaces we would write: 
 
     char_separator<char> delim(" &");
  And so our output would look like:
-
+ 
 
     token: CS
     token: 100
@@ -130,11 +130,15 @@ We can actually put multiple characters into our delimiter.  So to get rid of sp
     token: amazing.
 
 
-Now this is something useful.  Remember, this is not ignoring *all* white space, so you'll have to type in the [ASCII character codes](http://www.petefreitag.com/cheatsheets/ascii-codes/) for other types of white space.
+Now this is something useful.  Remember, this is not ignoring *all* white space, so you'll have to type in the [ASCII character codes](http://www.petefreitag.com/cheatsheets/ascii-codes/) for other types of white space.  
 
 So now we know that the delimiter can have multiple characters, but what about repeated characters? Turns out that it won't make a difference. So try `char_separator<char> delim(" &&&");` on your own if you don't believe us.
 
 **Why is this better than strtok?**
-If you haven't already looked, check out the [strtok tutorial](https://github.com/mikeizbicki/ucr-cs100/tree/2015winter/textbook/assignment-help/strtok) so that you can get a better understanding of it.  As with everything, there are always its pros and its cons, and you'll find that `strtok` might not be as intuitive as the boost tokenizer.
+If you haven't already looked, check out the [strtok tutorial](https://github.com/mikeizbicki/ucr-cs100/tree/2015winter/textbook/assignment-help/strtok) so that you can get a better understanding of it.  As with everything, there are always its pros and its cons, and you'll find that `strtok` might not be as intuitive as the boost tokenizer.  
 
-In `strtok`, we have to pass in two parameters and from the other tutorial, we see that there's this whole issue with having to pass in `NULL` so as to continue parsing with the same string. However with boost, the entire string is already parsed and we use iterators to look through them.
+In `strtok`, we have to pass in two parameters and from the other tutorial, we see that there's this whole issue with having to pass in `NULL` so as to continue parsing with the same string. However, with boost the entire string is already parsed and we use iterators to look through them.
+
+`strtok` also cannot move backwards while tokenizing.  Once `strtok` is called, the substring before the token is dropped and cannot be accessed any more unless you pass in the original string again.
+
+FIX ME: add summary?
