@@ -139,11 +139,13 @@ where `delim` is the name of our delimiter and for this particular example,
 `&` is the thing we will ignore.
 
 The tokenizer will now require an extra parameter so that it knows which
-delimiter we're using.  If this extra parameter is not passed in, then the
-tokenizer will default to just ignoring *only* white space.  It will also
-treat non-letter/number characters as separate tokens. This is something
-you can test on your own, because it's not exactly useful to have strings
-parsed like this.
+delimiter we're using.
+If this extra parameter is not passed in, then the tokenizer will default
+to just ignoring *only* white space.
+Also, if your `char_separator<char>` has no elements in its set, then your
+tokenizer will also go with this default.
+This is something you can test on your own, because it's not exactly
+useful to have strings parse like this.
 
 So using the `typedef` from earlier, our declaration will look like
 ```
@@ -238,9 +240,8 @@ and in order to keep going through an entire string you would have to keep
 calling the `strok` function.
 
 `strtok` also cannot move backwards while tokenizing.
-Once `strtok` is called, the previous token will be dropped and it
-cannot be accessed any more unless you pass in the original string again to
-get that token back.
+Once `strtok` is called, the sequence that is input into `strok` will get
+destroyed when the parsing moves onto the next token.
 
 ##Summary
  - The setup for boost tokenizer:
@@ -261,3 +262,6 @@ tokenizer< char_separator<char> > mytok2(str, delim);
    non-letter/number characters.
  - To be able to make your own tokenizer, you will need:
     - Your own delimiter, `char_separator<char>`
+    - `tokenizer< char_separator<char> > mytok(str, delim);
+    - If the `char_separator<char>` set is empty or if the parameter is
+      not passed in, then the tokenizer will ignore *only* white space
