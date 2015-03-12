@@ -237,7 +237,9 @@ find that `strtok` might not be as intuitive as the boost tokenizer.
 Looking at the `strtok`tutorial, we see that there's this whole issue with
 having to pass in `NULL` so as to continue parsing with the same string,
 and in order to keep going through an entire string you would have to keep
-calling the `strok` function.
+calling the `strtok` function.
+On the other hand, you have the boost tokenizer which can be called once
+and then have iterators go through the tokens.
 
 `strtok` also cannot move backwards while tokenizing.
 Once `strtok` is called, the sequence that is input into `strok` will get
@@ -265,3 +267,9 @@ tokenizer< char_separator<char> > mytok2(str, delim);
     - `tokenizer< char_separator<char> > mytok(str, delim);
     - If the `char_separator<char>` set is empty or if the parameter is
       not passed in, then the tokenizer will ignore *only* white space
+
+FIX ME:
+ - add more to summary?
+ - add in extra stuff about char_separator
+    - is able to output empty tokens, while strtok cannot
+    - is able to output the delimiters when found
