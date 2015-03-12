@@ -1,8 +1,9 @@
 #The Boost Library Tokenizer
 
 The boost library `tokenizer` , takes a sequence such as a string, and
-parses it into tokens or substrings.
-This makes life easier when you want to break up a string.  For example,
+parses it into tokens which are expressions that have some sort of special
+meaning, but really just think of it as a substring.
+This makes life easier when you want to break up a string. For example,
 you can take this string,
 
 `string str = "Don't panic, too much."`
@@ -141,11 +142,15 @@ where `delim` is the name of our delimiter and for this particular example,
 The tokenizer will now require an extra parameter so that it knows which
 delimiter we're using.
 If this extra parameter is not passed in, then the tokenizer will default
-to just ignoring *only* white space.
+to ignoring *only* white space.
+It should also be noted that the non-letter/number characters are each
+treated as tokens.
+So if you had `&&` somewhere in your string, this would become two
+separate tokens: `&` and `&`.
 Also, if your `char_separator<char>` has no elements in its set, then your
 tokenizer will also go with this default.
-This is something you can test on your own, because it's not exactly
-useful to have strings parse like this.
+It isn't useful to have strings parse like this, but you can test it on
+your own if you want to see it in action.
 
 So using the `typedef` from earlier, our declaration will look like
 ```
