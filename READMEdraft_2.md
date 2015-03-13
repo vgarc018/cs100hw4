@@ -104,7 +104,6 @@ So we'll need to declare and specify what our delimiters will be beforehand and 
 
 where `&` is the thing the tokenizer will look for to separate the tokens in this particular example.
 It's also very important to note that the `char_separator<char>` tokenizer model is also only working with characters, and we'll see in a moment why this matters.
-
 So let's see an example of this:
 
 ***ex_2.cpp***
@@ -145,7 +144,7 @@ But now this doesn't look like something useful since white space isn't being ig
 ***Multiple characters in our delimiter***
 
 The `char_separator<char>` model of boost tokenizer is a set, so therefore we can add more characters into it.
-So let's change our delimiter in ex_2.cpp to this:
+So let's change our delimiter set in ex_2.cpp to this:
 
 `char_separator<char> delim(" &");`
 
