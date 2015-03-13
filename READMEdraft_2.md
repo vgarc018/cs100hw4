@@ -65,13 +65,14 @@ And then in order to call the function we declare:
 tokenizer<> mytok(str);
 ```
 where `mytok` is the name of the tokenizer and `str` is the sequence of characters that we want to parse.
-
+And finally, we use iterators to go traverse through the tokens.
 However, the way this tokenizer is parsing isn't particularly useful.
 But we can control how the boost tokenizer parses by defining something which is known as the *delimiter.*
 
 ##So what's a delimiter and why is it useful?
-A delimiter is a set of one or more characters that separate text, and a tokenizer looks at these delimiters so that it can tell where to separate the tokens.
+A delimiter is a set of one or more characters that separate text, and a tokenizer looks at what characters are in the delimiter so that it can know where to separate the tokens.
 So for the previous tokenizer example, we can say that the delimiter contains white space and all non-letter/number characters.
+
 
 So let's work with this string:
 ```
