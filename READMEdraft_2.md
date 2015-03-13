@@ -51,7 +51,7 @@ much
 12
 34
 ```
->The `auto` feature is part of the c++11 standard, so check out this tutorial if you need help with that (insert tutorial link in here later).
+>*Note:* The `auto` feature is part of the c++11 standard, so check out this tutorial if you need help with that (insert tutorial link in here later).
 But if you don't have c++11, then you'll have to replace `auto` with `tokenizer<>::iterator`.
 
 So first, in order to use boost tokenizer we need to include the library.
@@ -93,7 +93,7 @@ The boost tokenizer function will need to know that we're making our own delimit
 ```
 tokenizer< char_separator<char> > mytok(str, delim);
 ```
->There are other separators that can be used, but for this particular tutorial we're going to work with `char_separator<char>`.
+>*Note:* There are other separators that can be used, but for this particular tutorial we're going to work with `char_separator<char>`.
 But check [the other separators](www.boost.org/doc/libs/1_57_0/libs/tokenizer/index.html) out if you want to see what else you can do with boost tokenizer.
 
 Notice how when we declare our `mytok` tokenizer, there is an extra parameter, `delim`, which is the name of our delimiter.
@@ -101,7 +101,7 @@ So we'll need to declare and specify what our delimiter will contain beforehand 
 ```
 char_separator<char> delim("&");
 ```
-where `delim` is the name of our delimiter and for this particular example, `&` is the thing the tokenizer will look for to separate the tokens.
+where `&` is the thing the tokenizer will look for to separate the tokens in this particular example.
 
 So let's see an example of this:
 
@@ -139,6 +139,9 @@ token: butter
 
 Notice how even though there were multiple `&`'s, all of them were not outputted.
 But now this doesn't look like something useful since white space isn't being ignored.
+
+***Multiple characters in our delimiter***
+
 Recall that we defined the delimiter as being a set of one or more characters, so obviously we can add more characters into this set.
 So let's change our delimiter to this:
 ```
@@ -156,8 +159,41 @@ token: as
 token: butter
 ```
 
-Now this looks like something useful, but keep in mind that this is not ignoring *all* white space.
-Try looking up [ASCII character codes](http://www.petefreitag.com/cheatsheets/ascii-codes/) for other types of white space.
+Now this looks like something that could be useful, but keep in mind that this is not ignoring *all* white space.
+Try looking up [ASCII character codes](http://www.petefreitag.com/cheatsheets/ascii-codes/) for other types of white space (and other miscellaneous characters).
+
+***Repeated characters in our delimiter***
+
+What if we had our delimiter contain repeats of the same character?
+Well since it's a set, multiple characters only count as one.
+So nothing much changes, but here's an example to show what happens:
+
+***ex_3.cpp***
+```
+#include <iostream>
+#include <string>
+#include <boost/tokenizer.hpp>
+
+using namespace std;
+using namespae boost;
+
+int main() {
+    string str = "Get*&**thee to*a * nun-nery";
+    char_separator<char> delim("* &&*---");
+    tokenizer< char_separator<char> > mytok(str, delim);
+
+    for(auto it = mytok.begin(); it != mytok.end(); ++it)
+        cout << *it << " ";
+    cout << endl;
+
+    return 0;
+}
+```
+```
+$ g++ -std=c++11 ex_3.cpp -o ex_3
+$ ./ex_3
+Get thee to a nun nery
+```
 
 What happens though if we didn't put anything into our delimiter?
 The default delimiter for this type of tokenizer will contain only white space, i.e. white space will not become a token.
