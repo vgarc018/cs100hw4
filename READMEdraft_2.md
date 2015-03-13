@@ -49,15 +49,19 @@ panic
 too
 much
 ```
+>*Note*: The `auto` feature is part of the c++11 standard, so check out this tutorial if you need help with that (insert tutorial link in here later).
+But if you don't have c++11, then you'll have to replace `auto` with `tokenizer<>::iterator`.
 So first, in order to use boost tokenizer we need to include the library.
+
+```
+#include <boost/tokenizer.hpp>
+using namespace boost;
+```
 And then in order to call the function we declare:
 ```
 tokenizer<> mytok(str);
 ```
 where `mytok` is the name of the tokenizer and `str` is the sequence of characters that we want to parse.
-
->*Note*: The `auto` feature is part of the c++11 standard, so check out this tutorial if you need help with that (insert tutorial link in here later).
-But if you don't have c++11, then you'll have to replace `auto` with `tokenizer<>::iterator`.
 
 However, the way this tokenizer is parsing isn't particularly useful.
 By default, this tokenizer will not output white space and non-letter/number characters.
