@@ -67,25 +67,26 @@ And then in order to call the function we declare:
 where `mytok` is the name of the tokenizer and `str` is the sequence of characters that we want to parse.
 And finally, we use iterators to traverse through the tokens.
 However, the way this tokenizer is parsing isn't particularly useful.
-But we can control how the boost tokenizer parses by defining something which is known as the *delimiter.*
+But we can control how the boost tokenizer parses by defining something which is known as a *delimiter.*
 
 ##So what's a delimiter and why is it useful?
 ***How the tokenizer uses the delimiter***
 
-A delimiter is a set of one or more characters that separate text, and a tokenizer looks at what characters are in the delimiter so that it can know where to separate the tokens.
-So for the previous tokenizer example, we can say that the delimiter contains white space and all non-letter/number characters.
+A delimiter is a sequence of one or more characters that separate text, and a tokenizer looks at what delimiters are passed in so that it can know where to separate the tokens.
+So for the previous tokenizer example, we can say that the delimiters are white space and all non-letter/number characters.
 Just for reference, our string was:
 
 `string str = "Don't panic, too much. 12,34";`
 
-To explain in detail how this string got parsed, the tokenizer will go through each character in the string and it will check to see if it is in the delimiter set.
-Once it finds a match, the tokenizer will know that everything up until that character is a token so `Don` becomes a token since it finds `'`, which tokenizer knows is in the delimiter.
+To explain in detail how this string got parsed, it should be noted that `tokenizer<>` parses by characters.
+So this tokenizer will go through each character in the string and it will check to see if it is in the delimiter set.
+Once it finds a match, the tokenizer will know that everything up until that character is a token so `Don` becomes a token since it finds `'`.
 It will then move on to creating the next token and once it finds `,` it creates the token `panic`.
 And so this continues on until the tokenizer has gone through the whole string.
 
 ***Defining our own***
 
-But again, we don't want this as our delimiter, so let's work with this string to see how we can define our own:
+But again, we want to know how to pass in our own delimiters, so let's work with this string to see how we can define our own:
 
 `string str = "Thou&&&&art&as     fat&as&&butter";`
 
@@ -96,12 +97,13 @@ The boost tokenizer function will need to know that we're making our own delimit
 >*Note:* There are other separators that can be used, but for this particular tutorial we're going to work with `char_separator<char>`.
 But check [the other separators](www.boost.org/doc/libs/1_57_0/libs/tokenizer/index.html) out if you want to see what else you can do with boost tokenizer.
 
-Notice how when we declare our `mytok` tokenizer, there is an extra parameter, `delim`, which is the name of our delimiter.
-So we'll need to declare and specify what our delimiter will contain beforehand and we do this like:
+Notice how when we declare our `mytok` tokenizer there is an extra parameter, `delim`, which is the name of our delimiter set.
+So we'll need to declare and specify what our delimiters will be beforehand and we do this like:
 
 `char_separator<char> delim("&");`
 
 where `&` is the thing the tokenizer will look for to separate the tokens in this particular example.
+It's also very important to note that the `char_separator<char>` tokenizer model is also only working with characters.
 
 So let's see an example of this:
 
@@ -142,7 +144,7 @@ But now this doesn't look like something useful since white space isn't being ig
 
 ***Multiple characters in our delimiter***
 
-Recall that we defined the delimiter as being a set of one or more characters, so obviously we can add more characters into this set.
+The char_separator<char> model of boost tokenizer is a set, so therefore we can add more characters into it.
 So let's change our delimiter in ex_2.cpp to this:
 
 `char_separator<char> delim(" &");`
@@ -160,17 +162,18 @@ token: butter
 ```
 
 Now this looks like something that could be useful, but keep in mind that this is not ignoring *all* white space.
-Try looking up [ASCII character codes](http://www.petefreitag.com/cheatsheets/ascii-codes/) for other types of white space (and other miscellaneous characters).
+Try looking up [ASCII character codes](http://www.petefreitag.com/cheatsheets/ascii-codes/) for other types of white space (and other miscellaneous characters that you might need).
 
 ***Repeated characters in our delimiter***
 
-What if we had our delimiter contain repeats of the same character?
+What if our delimiter set contains repeats of the same character?
 Well since it's a set, multiple characters only count as one.
 So if you wanted to parse a string like,
 
 `ls dir || cat file | tr a-z A-Z`
 
 and you didn't want to include the pipe `|` in your delimiter, having it contain `||` will *not* be recognized as something distinct to look for in parsing.
+Also, recall that we said `char_separator<char>` only deals with characters, so wanting to have a delimiter be more than one character won't work with this tokenizer model.
 Here's an example to show what happens:
 
 ***ex_3.cpp***
@@ -203,7 +206,7 @@ ls dir cat file tr a-z A-Z
 ***Something to look out for***
 
 What happens though if we didn't put anything into our delimiter?
-The default delimiter for this type of tokenizer will contain only white space, i.e. white space will not become a token.
+The default delimiter for this type of tokenizer will contain only white space.
 Also, the non-letter/number characters are each treated as a token.
 Notice that this is different from `tokenizer<>`.
 
@@ -223,7 +226,7 @@ int main() {
     char_separator<char> delim;
     tokenizer< char_separator<char> > mytok(str, delim);
 
-    //Also the same as not even declaring delim and writing
+    //This also behaves the same
     //tokenizer< char_separator<char> > mytok(str);
 
     for(auto it = mytok.begin(); it != mytok.end(); ++it)
