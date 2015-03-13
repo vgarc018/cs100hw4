@@ -70,7 +70,8 @@ However, the way this tokenizer is parsing isn't particularly useful.
 But we can control how the boost tokenizer parses by defining something which is known as the *delimiter.*
 
 ##So what's a delimiter and why is it useful?
-*How the tokenizer uses the delimiter:*
+***How the tokenizer uses the delimiter***
+
 A delimiter is a set of one or more characters that separate text, and a tokenizer looks at what characters are in the delimiter so that it can know where to separate the tokens.
 So for the previous tokenizer example, we can say that the delimiter contains white space and all non-letter/number characters.
 Just for reference, our string was:
@@ -82,7 +83,8 @@ Once it finds a match, the tokenizer will know that everything up until that cha
 It will then move on to creating the next token and once it finds `,` it creates the token `panic`.
 And so this continues on until the tokenizer has gone through the whole string.
 
-*Defining our own*
+***Defining our own***
+
 But again, we don't want this as our delimiter, so let's work with this string to see how we can define our own:
 ```
 string str = "Thou&&&&art&as     fat&as&&butter";
