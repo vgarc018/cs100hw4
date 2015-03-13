@@ -160,7 +160,7 @@ token: as
 token: butter
 ```
 
-Now this looks like something that could be useful, but keep in mind that this is not ignoring *all* white space.
+Now this looks like something that could be useful, but keep in mind that this delimiter set does not contain *all* white space.
 Try looking up [ASCII character codes](http://www.petefreitag.com/cheatsheets/ascii-codes/) for other types of white space (and other miscellaneous characters that you might need).
 
 ***Repeated characters in our delimiter***
