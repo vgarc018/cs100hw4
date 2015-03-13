@@ -90,7 +90,7 @@ But again, we want to know how to pass in our own delimiters, so let's work with
 
 `string str = "Thou&&&&art&as     fat&as&&butter";`
 
-The boost tokenizer function will need to know that we're making our own delimiter, so we pass in the separator from the boost tokenizer library `char_separator<char>`:
+The boost tokenizer function will need to know that we're making our own delimiter, so we use `char_separator<char>` from the boost tokenizer library like this:
 
 `tokenizer< char_separator<char> > mytok(str, delim);`
 
@@ -144,7 +144,7 @@ But now this doesn't look like something useful since white space isn't being ig
 
 ***Multiple characters in our delimiter***
 
-The char_separator<char> model of boost tokenizer is a set, so therefore we can add more characters into it.
+The `char_separator<char>` model of boost tokenizer is a set, so therefore we can add more characters into it.
 So let's change our delimiter in ex_2.cpp to this:
 
 `char_separator<char> delim(" &");`
@@ -173,7 +173,7 @@ So if you wanted to parse a string like,
 `ls dir || cat file | tr a-z A-Z`
 
 and you didn't want to include the pipe `|` in your delimiter, having it contain `||` will *not* be recognized as something distinct to look for in parsing.
-Also, recall that we said `char_separator<char>` only deals with characters, so wanting to have a delimiter be more than one character won't work with this tokenizer model.
+Also, recall that we said `char_separator<char>` only deals with characters, so wanting to have a delimiter be more than one character won't work with this tokenizer model anyways.
 Here's an example to show what happens:
 
 ***ex_3.cpp***
