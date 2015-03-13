@@ -110,8 +110,8 @@ is known as the ***delimiter.***
 
 ##So what's a **delimiter** and why is it useful?
 A delimiter is a set of one or more characters that separate text.
-We can specify what our delimiter will contain for the tokenizing function
-so that we can control how our string will get parsed.
+We can specify what our delimiter will contain so that we can control how
+our string will get parsed.
 
 So here's another example we can work with:
 
@@ -145,14 +145,15 @@ If this extra parameter is not passed in, then the tokenizer will default
 to ignoring *only* white space.
 It should also be noted that the non-letter/number characters are each
 treated as tokens.
-So if you had `&&` somewhere in your string, this would become two
+So if you had `&&` somewhere in your string, it would become two
 separate tokens: `&` and `&`.
 Also, if your `char_separator<char>` has no elements in its set, then your
 tokenizer will also go with this default.
-It isn't useful to have strings parse like this, but you can test it on
-your own if you want to see it in action.
+It isn't useful to have strings parse like this for this class, but you can
+test it on your own if you want to see it in action.
 
-So using the `typedef` from earlier, our declaration will look like
+So using the `typedef` from earlier, our declaration with the new parameter
+will look like
 ```
 tok mytok(str, delim);
 ```
@@ -239,7 +240,7 @@ of it.
 As with everything, there are always its pros and its cons and you'll
 find that `strtok` might not be as intuitive as the boost tokenizer.
 
-Looking at the `strtok`tutorial, we see that there's this whole issue with
+Looking at the `strtok` tutorial, we see that there's this whole issue with
 having to pass in `NULL` so as to continue parsing with the same string,
 and in order to keep going through an entire string you would have to keep
 calling the `strtok` function.
