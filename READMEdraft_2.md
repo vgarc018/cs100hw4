@@ -103,7 +103,7 @@ So we'll need to declare and specify what our delimiters will be beforehand and 
 `char_separator<char> delim("&");`
 
 where `&` is the thing the tokenizer will look for to separate the tokens in this particular example.
-It's also very important to note that the `char_separator<char>` tokenizer model is also only working with characters.
+It's also very important to note that the `char_separator<char>` tokenizer model is also only working with characters, and we'll see in a moment why this matters.
 
 So let's see an example of this:
 
