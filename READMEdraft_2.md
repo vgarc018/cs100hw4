@@ -31,7 +31,7 @@ using namespace std;
 using namespace boost;
 
 int main() {
-    string str = "Don't panic, too much.";
+    string str = "Don't panic, too much. 12,34";
     tokenizer<> mytok(str);
     for(auto it = mytok.begin(); it != mytok.end(); ++it)
         cout << *it << endl;
@@ -48,6 +48,8 @@ t
 panic
 too
 much
+12
+34
 ```
 >*Note*: The `auto` feature is part of the c++11 standard, so check out this tutorial if you need help with that (insert tutorial link in here later).
 But if you don't have c++11, then you'll have to replace `auto` with `tokenizer<>::iterator`.
@@ -65,11 +67,11 @@ tokenizer<> mytok(str);
 where `mytok` is the name of the tokenizer and `str` is the sequence of characters that we want to parse.
 
 However, the way this tokenizer is parsing isn't particularly useful.
-By default, this tokenizer will not output white space and non-letter/number characters.
-But we can control this by defining something which is known as the *delimiter.*
+But we can control how the boost tokenizer parses by defining something which is known as the *delimiter.*
 
 ##So what's a delimiter and why is it useful?
-A delimiter is a set of one or more characters that separate text and a tokenizer looks at these delimiters so that it can tell where to separate the tokens.
+A delimiter is a set of one or more characters that separate text, and a tokenizer looks at these delimiters so that it can tell where to separate the tokens.
+So for the previous tokenizer example, we can say that the delimiter contains white space and all non-letter/number characters.
 
 So let's work with this string:
 ```
