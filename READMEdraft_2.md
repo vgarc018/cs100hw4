@@ -65,7 +65,7 @@ And then in order to call the function we declare:
 tokenizer<> mytok(str);
 ```
 where `mytok` is the name of the tokenizer and `str` is the sequence of characters that we want to parse.
-And finally, we use iterators to go traverse through the tokens.
+And finally, we use iterators to traverse through the tokens.
 However, the way this tokenizer is parsing isn't particularly useful.
 But we can control how the boost tokenizer parses by defining something which is known as the *delimiter.*
 
