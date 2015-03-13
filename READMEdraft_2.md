@@ -51,7 +51,7 @@ much
 12
 34
 ```
->*Note*: The `auto` feature is part of the c++11 standard, so check out this tutorial if you need help with that (insert tutorial link in here later).
+>The `auto` feature is part of the c++11 standard, so check out this tutorial if you need help with that (insert tutorial link in here later).
 But if you don't have c++11, then you'll have to replace `auto` with `tokenizer<>::iterator`.
 
 So first, in order to use boost tokenizer we need to include the library.
@@ -93,7 +93,7 @@ The boost tokenizer function will need to know that we're making our own delimit
 ```
 tokenizer< char_separator<char> > mytok(str, delim);
 ```
-There are other separators that can be used, but for this particular tutorial we're going to work with `char_separator<char>`.
+>There are other separators that can be used, but for this particular tutorial we're going to work with `char_separator<char>`.
 But check [the other separators](www.boost.org/doc/libs/1_57_0/libs/tokenizer/index.html) out if you want to see what else you can do with boost tokenizer.
 
 Notice how when we declare our `mytok` tokenizer, there is an extra parameter, `delim`, which is the name of our delimiter.
