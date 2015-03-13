@@ -51,6 +51,7 @@ much
 ```
 >*Note*: The `auto` feature is part of the c++11 standard, so check out this tutorial if you need help with that (insert tutorial link in here later).
 But if you don't have c++11, then you'll have to replace `auto` with `tokenizer<>::iterator`.
+
 So first, in order to use boost tokenizer we need to include the library.
 
 ```
