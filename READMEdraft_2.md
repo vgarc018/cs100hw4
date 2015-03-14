@@ -143,7 +143,7 @@ But now this doesn't look like something useful since white space isn't being ig
 
 ***Multiple characters in our delimiter***
 
-The `char_separator<char>` model of boost tokenizer is a set, so therefore we can add more characters into it.
+The `char_separator<char>` model of boost tokenizer is able to take in multiple characters.
 So let's change our delimiter set in ex_2.cpp to this:
 
 `char_separator<char> delim(" &");`
@@ -166,14 +166,17 @@ Try looking up [ASCII character codes](http://www.petefreitag.com/cheatsheets/as
 ***Repeated characters in our delimiter***
 
 What if our delimiter set contains repeats of the same character?
-Well since it's a set, multiple characters only count as one.
+We explained earlier how a tokenizer will match the text with the delimiters to know where to separate tokens, and because this boost tokenizer deals with only characters, the tokenizer will look in the set and match a character to a character.
+So if a character showed up one time in the set, then the tokenizer will know that this marks the separation of tokens.
+Any other subsequent appearances of this character won't mean anything since the tokenizer would have parsed the token after seeing the first one.
+This is why we keep referring to the `char_separator<char>` as the delimiter set, since it acts like a set.
+
 So if you wanted to parse a string like,
 
 `ls dir || cat file | tr a-z A-Z`
 
 and you didn't want to include the pipe `|` in your delimiter, having it contain `||` will *not* be recognized as something distinct to look for in parsing.
-Also, recall that we said `char_separator<char>` only deals with characters, so wanting to have a delimiter be more than one character won't work with this tokenizer model anyways.
-Here's an example to show what happens:
+Here's code to show what happens:
 
 ***ex_3.cpp***
 ```
