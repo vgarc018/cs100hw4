@@ -248,9 +248,13 @@ $ ./ex_4
 Here are the basics of making a tokenizer with your own delimiters:
 
  - Create your own delimiter:
+
   `char_separator<char> delim("/*delimiters*/");`
+
  - Make a tokenizer function:
+
   `tokenizer< char_separator<char> > mytok(str, delim);`
+
  - Your delimiter set can take in multiple characters as delimiters.
  - Repeated characters do not make a difference in parsing.
 
