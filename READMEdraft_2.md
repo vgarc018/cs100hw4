@@ -148,7 +148,7 @@ So let's change our delimiter set in ex_2.cpp to this:
 
 `char_separator<char> delim(" &");`
 
-Now, let's compile the code with this change and then execute it:
+Let's compile the code with this change and then execute it:
 ```
 $ g++ -std=c++11 ex_2.cpp -o ex_2
 $ ./ex_2
@@ -205,7 +205,7 @@ $ ./ex_3
 ls dir cat file tr a-z A-Z
 ```
 
-***Something to look out for***
+***Default delimiters***
 
 What happens though if we didn't put anything into our delimiter?
 The default delimiter set for this type of tokenizer will contain only white space.
@@ -246,12 +246,14 @@ $ ./ex_4
 
 ##Going beyond with char_separator<char>
 Here are the basics of making a tokenizer with your own delimiters:
-    - Create your own delimiter:
-        `char_separator<char> delim("/*delimiters*/");`
-    - Make a tokenizer function:
-        `tokenizer< char_separator<char> > mytok(str, delim);`
-    - Your delimiter set can take in multiple characters as delimiters.
-    - Repeated characters do not make a difference in parsing.
+
+ - Create your own delimiter:
+  `char_separator<char> delim("/*delimiters*/");`
+ - Make a tokenizer function:
+  `tokenizer< char_separator<char> > mytok(str, delim);`
+ - Your delimiter set can take in multiple characters as delimiters.
+ - Repeated characters do not make a difference in parsing.
+
 But it might be useful to know that `char_separator<char>` has options for outputting delimiters and empty tokens.
 This is where boost tokenizer really differentiates from the `strtok` function since it can do neither of these.
 
