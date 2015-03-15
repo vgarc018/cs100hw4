@@ -286,6 +286,7 @@ using namespace boost;
 int main() {
     char_separator<char> delim("^| ", ";");
     string str = "I;m test^ing this || out;";
+    cout << str << endl;
 
     tokenizer< char_separator<char> > mytok(str, delim);
 
@@ -298,6 +299,7 @@ int main() {
 ```
 $ g++ -std=c++11 ex_5.cpp -o ex_5
 $ ./ex_5
+I;m test^ing this || out;
 (I) (;) (m) (test) (ing) (this) (out) (;)
 ```
 
@@ -318,5 +320,6 @@ Let's use the previous example and change our delimiter to:
 
 Compiling and running with this change will give us:
 ```
+I;m test^ing this || out;
 (I) (;) (m) (test) (ing) (this) () () () (out) (;) ()
 ```
