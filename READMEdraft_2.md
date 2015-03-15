@@ -314,4 +314,9 @@ Tokenizers such as `strtok` will not output these empty tokens but maybe it migh
 In order to do this, `keep_empty_tokens` must be passed in as the third paramter for `char_separator<char>.`
 Let's use the previous example and change our delimiter to:
 
-`char_separator<char> delim(`
+`char_separator<char> delim("^| ", ";", keep_empty_tokens);`
+
+Compiling and running with this change will give us:
+```
+(I) (;) (m) (test) (ing) (this) () () () (out) (;) ()
+```
