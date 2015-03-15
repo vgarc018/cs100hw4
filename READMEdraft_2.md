@@ -272,6 +272,31 @@ For example, we could have:
 `char_separator<char> delim("^| ", ";");`
 
 which will separate tokens by the delimiters `^| ;` and will also make `;` a token.
-For example:
+Here's some code demonstrating this:
 
 ***ex_5.cpp***
+```
+#include <iostream>
+#include <string>
+#include <boost/tokenizer.hpp>
+
+using namespace std;
+using namespace boost;
+
+int main() {
+    char_separator<char> delim("^| ", ";");
+    string str = "I;m test^ing this || out;";
+
+    tokenizer< char_separator<char> > mytok(str, delim);
+
+    for(auto it = mytok.begin(); it != mytok.end(); ++it)
+        cout << *it << " ";
+
+    return 0;
+}
+```
+```
+$ g++ -std=c++11 ex_5.cpp -o ex_5
+$ ./ex_5
+I ; m test ing this out ;
+```
