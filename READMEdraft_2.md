@@ -290,7 +290,7 @@ int main() {
     tokenizer< char_separator<char> > mytok(str, delim);
 
     for(auto it = mytok.begin(); it != mytok.end(); ++it)
-        cout << *it << " ";
+        cout << "(" << *it << ")" << " ";
 
     return 0;
 }
@@ -298,5 +298,20 @@ int main() {
 ```
 $ g++ -std=c++11 ex_5.cpp -o ex_5
 $ ./ex_5
-I ; m test ing this out ;
+(I) (;) (m) (test) (ing) (this) (out) (;)
 ```
+
+***Empty tokens***
+
+Recall that when a tokenizer goes through a string it will separate tokens by the delimiters.
+But what if there are multiple delimiters right next to each other?
+
+Say we have this string `c&&ar` where our delimiter is `&`.
+When the tokenizer reaches the first `&`, it will know that `c` is a token.
+Then it will start working on the next token, but it will find another `&` right after and it will think, that's the end of the token.
+But there was nothing that was actually put into this token and thus we have an *empty token*.
+Tokenizers such as `strtok` will not output these empty tokens but maybe it might be useful to know where these empty tokens are, so the boost tokenizer gives us this option.
+In order to do this, `keep_empty_tokens` must be passed in as the third paramter for `char_separator<char>.`
+Let's use the previous example and change our delimiter to:
+
+`char_separator<char> delim(`
