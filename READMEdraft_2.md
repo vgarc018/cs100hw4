@@ -17,7 +17,7 @@ much
 ```
 Notice how the `'` `,` and the `.` were not outputted.
 
-##So how do we do this?
+##How do we do this?
 
 Let's just go straight into the code:
 
@@ -73,15 +73,15 @@ But we can control how the boost tokenizer parses by defining something which is
 ***How the tokenizer uses the delimiter***
 
 A delimiter is a sequence of one or more characters that separate text, and a tokenizer looks at what delimiters are passed in so that it can know where to separate the tokens.
-So for the previous tokenizer example, we can say that the delimiters are white space and all non-letter/number characters.
+So for the previous tokenizer example, we can say that the default delimiters are white space and all non-letter/number characters.
 Just for reference, our string was:
 
 `string str = "Don't panic, too much. 12,34";`
 
 To explain in detail how this string got parsed, it should be noted that `tokenizer<>` parses by characters.
 So this tokenizer will go through each character in the string and it will check to see if it is in the delimiter set.
-Once it finds a match, the tokenizer will know that everything up until that character is a token so `Don` becomes a token since it finds `'`.
-It will then move on to creating the next token and once it finds `,` it creates the token `panic`.
+Once it finds a match, the tokenizer will know that everything up until that character is a token so `Don` becomes a token since it finds `'`, which is a non-letter/number character.
+It will then move on to creating the next token and once it finds the space after `t`, it creates the token `t`.
 And so this continues on until the tokenizer has gone through the whole string.
 
 ***Defining our own***
@@ -90,7 +90,7 @@ But again, we want to know how to pass in our own delimiters, so let's work with
 
 `string str = "Thou&&&&art&as     fat&as&&butter";`
 
-The boost tokenizer function will need to know that we're making our own delimiter, so we use `char_separator<char>` from the boost tokenizer library like this:
+The boost tokenizer function will need to know that we're making our own delimiter, so we use `char_separator<char>` from the boost library like this:
 
 `tokenizer< char_separator<char> > mytok(str, delim);`
 
@@ -102,7 +102,7 @@ So we'll need to declare and specify what our delimiters will be beforehand and 
 
 `char_separator<char> delim("&");`
 
-where `&` is the thing the tokenizer will look for to separate the tokens in this particular example.
+where `&` is the thing the tokenizer will look for to separate the tokens.
 It's also very important to note that the `char_separator<char>` tokenizer model is also only working with characters, and we'll see in a moment why this matters.
 So let's see an example of this:
 
@@ -160,7 +160,7 @@ token: as
 token: butter
 ```
 
-Now this looks like something that could be useful, but keep in mind that this delimiter set does not contain *all* white space.
+Now this looks better, but keep in mind that this delimiter set does not contain *all* white space.
 Try looking up [ASCII character codes](http://www.petefreitag.com/cheatsheets/ascii-codes/) for other types of white space (and other miscellaneous characters that you might need).
 
 ***Repeated characters in our delimiter***
@@ -168,7 +168,7 @@ Try looking up [ASCII character codes](http://www.petefreitag.com/cheatsheets/as
 What if our delimiter set contains repeats of the same character?
 We explained earlier how a tokenizer will match the text with the delimiters to know where to separate tokens, and because this boost tokenizer deals with only characters, the tokenizer will look in the set and match a character to a character.
 So if a character showed up one time in the set, then the tokenizer will know that this marks the separation of tokens.
-Any other subsequent appearances of this character won't mean anything since the tokenizer would have parsed the token after seeing the first one.
+Any other subsequent appearances of this character won't mean anything since the tokenizer would have already parsed the token after seeing the first one.
 This is why we keep referring to the `char_separator<char>` as the delimiter set, since it acts like a set.
 
 So if you wanted to parse a string like,
@@ -208,7 +208,7 @@ ls dir cat file tr a-z A-Z
 ***Something to look out for***
 
 What happens though if we didn't put anything into our delimiter?
-The default delimiter for this type of tokenizer will contain only white space.
+The default delimiter set for this type of tokenizer will contain only white space.
 Also, the non-letter/number characters are each treated as a token.
 Notice that this is different from `tokenizer<>`.
 
@@ -243,3 +243,22 @@ $ g++ -std=c++11 ex_4.cpp -o ex_4
 $ ./ex_4
 12 * 34 I, declare a & & thumb ! war
 ```
+
+##Going beyond with char_separator<char>
+Here are the basics of making a tokenizer with your own delimiters:
+    - Create your own delimiter:
+        `char_separator<char> delim("/*delimiters*/");`
+    - Make a tokenizer function:
+        `tokenizer< char_separator<char> > mytok(str, delim);`
+    - Your delimiter set can take in multiple characters as delimiters.
+    - Repeated characters do not make a difference in parsing.
+But it might be useful to know that `char_separator<char>` has options for outputting delimiters and empty tokens.
+This is where boost tokenizer really differentiates from the `strtok` function since it can do neither of these.
+
+>*Note:* If you're not familiar with `strtok`, check out this [tutorial](https://github.com/mikeizbicki/ucr-cs100/tree/2015winter/textbook/assignment-help/strtok).
+
+***Kept delimiters***
+By default, the boost tokenizer will not output delimiters as a token when it finds them, but they can become tokens by passing in another parameter to `char_separator<char>`.
+Simply put in quotations the set of delimiters that you would like to make as tokens.
+For example, we could have:
+`char_separator<char> delim(";^| ", ";");
