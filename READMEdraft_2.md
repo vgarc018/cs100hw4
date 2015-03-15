@@ -264,7 +264,15 @@ This is where boost tokenizer really differentiates from the `strtok` function s
 >*Note:* If you're not familiar with `strtok`, check out this [tutorial](https://github.com/mikeizbicki/ucr-cs100/tree/2015winter/textbook/assignment-help/strtok).
 
 ***Kept delimiters***
-By default, the boost tokenizer will not output delimiters as a token when it finds them, but they can become tokens by passing in another parameter to `char_separator<char>`.
-Simply put in quotations the set of delimiters that you would like to make as tokens.
+
+So far, we have been working with the *dropped delimiters* of `char_separator<char>`, which are the delimiters that do not become tokens.
+`char_separator<char>` actually has another parameter to specify the *kept delimiters*, which will be the delimiters that do become tokens.
+This will look like:
+
+`char_separator<char> delim(DROPPED_DELIM, KEPT_DELIM);`
+
 For example, we could have:
-`char_separator<char> delim(";^| ", ";");
+
+`char_separator<char> delim("^| ", ";");`
+
+which will separate tokens by the delimiters `^| ;` and will also make `;` a token.
