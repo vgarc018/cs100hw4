@@ -38,8 +38,6 @@ int main() {
     return 0;
 }
 ```
-
-Running this, we get:
 ```
 $ g++ -std=c++11 ex_1.cpp -o ex_1
 $ ./ex_1
@@ -126,8 +124,6 @@ int main() {
     return 0;
 }
 ```
-
-Running this we get:
 ```
 $ g++ -std=c++11 ex_2.cpp -o ex_2
 $ ./ex_2
@@ -249,7 +245,7 @@ Here are the basics of making a tokenizer with your own delimiters:
 
  - Create your own delimiter:
 
-  `char_separator<char> delim("/*delimiters*/");`
+  `char_separator<char> delim(DELIMITERS);`
 
  - Make a tokenizer function:
 
@@ -276,3 +272,6 @@ For example, we could have:
 `char_separator<char> delim("^| ", ";");`
 
 which will separate tokens by the delimiters `^| ;` and will also make `;` a token.
+For example:
+
+***ex_5.cpp***
