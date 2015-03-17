@@ -22,6 +22,7 @@ Notice how the `'` `,` and the `.` were not outputted.
 Let's just go straight into the code:
 
 ***ex_1.cpp***
+
 ```
 #include <iostream>
 #include <string>
@@ -38,6 +39,7 @@ int main() {
     return 0;
 }
 ```
+
 ```
 $ g++ -std=c++11 ex_1.cpp -o ex_1
 $ ./ex_1
@@ -49,7 +51,7 @@ much
 12
 34
 ```
->*Note:* The `auto` feature is part of the c++11 standard, so check out this tutorial if you need help with that (insert tutorial link in here later).
+**Note:** The `auto` feature is part of the c++11 standard, so check out this tutorial if you need help with that (insert tutorial link in here later).
 But if you don't have c++11, then you'll have to replace `auto` with `tokenizer<>::iterator`.
 
 So first, in order to use boost tokenizer we need to include the library.
@@ -58,19 +60,19 @@ So first, in order to use boost tokenizer we need to include the library.
 #include <boost/tokenizer.hpp>
 using namespace boost;
 ```
-And then in order to call the function we declare:
+Then in order to call the function we declare:
 
 `tokenizer<> mytok(str);`
 
 where `mytok` is the name of the tokenizer and `str` is the sequence of characters that we want to parse.
-And finally, we use iterators to traverse through the tokens.
+Finally, we use iterators to traverse through the tokens.
 However, the way this tokenizer is parsing isn't particularly useful.
 But we can control how the boost tokenizer parses by defining something which is known as a *delimiter.*
 
 ##So what's a delimiter and why is it useful?
 ***How the tokenizer uses the delimiter***
 
-A delimiter is a sequence of one or more characters that separate text, and a tokenizer looks at what delimiters are passed in so that it can know where to separate the tokens.
+A delimiter is a sequence of one or more characters that separate texts, and a tokenizer looks at what delimiters are passed in so that it can know where to separate the tokens.
 So for the previous tokenizer example, we can say that the default delimiters are white space and all non-letter/number characters.
 Just for reference, our string was:
 
@@ -92,11 +94,11 @@ The boost tokenizer function will need to know that we're making our own delimit
 
 `tokenizer< char_separator<char> > mytok(str, delim);`
 
->*Note:* There are other separators that can be used, but for this particular tutorial we're going to work with `char_separator<char>`.
+*Note:* There are other separators that can be used, but for this particular tutorial we're going to work with `char_separator<char>`.
 But check [the other separators](www.boost.org/doc/libs/1_57_0/libs/tokenizer/index.html) out if you want to see what else you can do with boost tokenizer.
 
 Notice how when we declare our `mytok` tokenizer there is an extra parameter, `delim`, which is the name of our delimiter set.
-So we'll need to declare and specify what our delimiters will be beforehand and we do this like:
+So we'll need to declare and specify what our delimiters will be beforehand and we do this,
 
 `char_separator<char> delim("&");`
 
@@ -105,14 +107,8 @@ It's also very important to note that the `char_separator<char>` tokenizer model
 So let's see an example of this:
 
 ***ex_2.cpp***
+
 ```
-#include<iostream>
-#include<string>
-#inlcude<boost/tokenizer.hpp>
-
-using namespace std;
-using namespace boost;
-
 int main() {
     string str = "Thou&&&&art&as    fat&as&&butter";
     char_separator<char> delim("&");
@@ -124,6 +120,7 @@ int main() {
     return 0;
 }
 ```
+
 ```
 $ g++ -std=c++11 ex_2.cpp -o ex_2
 $ ./ex_2
@@ -145,6 +142,7 @@ So let's change our delimiter set in ex_2.cpp to this:
 `char_separator<char> delim(" &");`
 
 Let's compile the code with this change and then execute it:
+
 ```
 $ g++ -std=c++11 ex_2.cpp -o ex_2
 $ ./ex_2
@@ -154,6 +152,7 @@ token: as
 token: fat
 token: as
 token: butter
+
 ```
 
 Now this looks better, but keep in mind that this delimiter set does not contain *all* white space.
@@ -161,7 +160,7 @@ Try looking up [ASCII character codes](http://www.petefreitag.com/cheatsheets/as
 
 ***Repeated characters in our delimiter***
 
-What if our delimiter set contains repeats of the same character?
+What if our delimiter set contains reapeated characters?
 We explained earlier how a tokenizer will match the text with the delimiters to know where to separate tokens, and because this boost tokenizer deals with only characters, the tokenizer will look in the set and match a character to a character.
 So if a character showed up one time in the set, then the tokenizer will know that this marks the separation of tokens.
 Any other subsequent appearances of this character won't mean anything since the tokenizer would have already parsed the token after seeing the first one.
@@ -175,14 +174,8 @@ and you didn't want to include the pipe `|` in your delimiter, having it contain
 Here's code to show what happens:
 
 ***ex_3.cpp***
+
 ```
-#include <iostream>
-#include <string>
-#include <boost/tokenizer.hpp>
-
-using namespace std;
-using namespae boost;
-
 int main() {
     string str = "ls dir || cat file | tr a-z A-Z";
     char_separator<char> delim(" ||");
@@ -195,6 +188,7 @@ int main() {
     return 0;
 }
 ```
+
 ```
 $ g++ -std=c++11 ex_3.cpp -o ex_3
 $ ./ex_3
@@ -211,14 +205,8 @@ Notice that this is different from `tokenizer<>`.
 Here's an example demonstrating this point:
 
 ***ex_4.cpp***
+
 ```
-#include <iostream>
-#include <string>
-#include <boost/tokenizer.hpp>
-
-using namespace std;
-using namespace boost;
-
 int main() {
     string str = "12*34 I, declare a&&thumb    !war";
     char_separator<char> delim;
@@ -234,6 +222,7 @@ int main() {
     return 0;
 }
 ```
+
 ```
 $ g++ -std=c++11 ex_4.cpp -o ex_4
 $ ./ex_4
@@ -257,7 +246,7 @@ Here are the basics of making a tokenizer with your own delimiters:
 But it might be useful to know that `char_separator<char>` has options for outputting delimiters and empty tokens.
 This is where boost tokenizer really differentiates from the `strtok` function since it can do neither of these.
 
->*Note:* If you're not familiar with `strtok`, check out this [tutorial](https://github.com/mikeizbicki/ucr-cs100/tree/2015winter/textbook/assignment-help/strtok).
+**Note:** If you're unfamiliar with `strtok`, check out this [tutorial](https://github.com/mikeizbicki/ucr-cs100/tree/2015winter/textbook/assignment-help/strtok).
 
 ***Kept delimiters***
 
@@ -275,14 +264,8 @@ which will separate tokens by the delimiters `^| ;` and will also make `;` a tok
 Here's some code demonstrating this:
 
 ***ex_5.cpp***
+
 ```
-#include <iostream>
-#include <string>
-#include <boost/tokenizer.hpp>
-
-using namespace std;
-using namespace boost;
-
 int main() {
     char_separator<char> delim("^| ", ";");
     string str = "I;m test^ing this || out;";
@@ -296,6 +279,7 @@ int main() {
     return 0;
 }
 ```
+
 ```
 $ g++ -std=c++11 ex_5.cpp -o ex_5
 $ ./ex_5
@@ -311,15 +295,17 @@ But what if there are multiple delimiters right next to each other?
 Say we have this string `c&&ar` where our delimiter is `&`.
 When the tokenizer reaches the first `&`, it will know that `c` is a token.
 Then it will start working on the next token, but it will find another `&` right after and it will think, that's the end of the token.
-But there was nothing that was actually put into this token and thus we have an *empty token*.
-Tokenizers such as `strtok` will not output these empty tokens but maybe it might be useful to know where these empty tokens are, so the boost tokenizer gives us this option.
+But there was nothing that was actually put into this token and thus we have an **empty token**.
+Tokenizers such as `strtok` will not output these empty tokens but maybe it might be useful to know where these empty tokens are, the boost tokenizer gives us this option.
 In order to do this, `keep_empty_tokens` must be passed in as the third paramter for `char_separator<char>.`
 Let's use the previous example and change our delimiter to:
 
 `char_separator<char> delim("^| ", ";", keep_empty_tokens);`
 
 Compiling and running with this change will give us:
+
 ```
 Original string: I;m test^ing this || out;
 (I) (;) (m) (test) (ing) (this) () () () (out) (;) ()
+
 ```
