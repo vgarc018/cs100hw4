@@ -7,7 +7,7 @@ For example, you can tokenize the string `Get thee to a nunnery`, which will be 
 
 ##How do we do use the boost tokenizer?
 
-Let's look at the src code from [ex1.cpp](https://github.com/vgarc018/cs100hw4/blob/master/src/ex_1.cpp).
+Let's look at the code from [ex1.cpp](https://github.com/vgarc018/cs100hw4/blob/master/src/ex_1.cpp).
 
 The first thing we'll have to do is include the boost tokenizer library and use the boost namespace.
 
@@ -20,7 +20,7 @@ using namespace std;
 using namespace boost;
 ```
 
-Then we call the tokenizer function like this and use iterators to traverse through the tokens.
+Then we call the tokenizer function and use iterators to traverse through the tokens.
 
 ```
 int main() {
@@ -58,7 +58,7 @@ Once it finds a match, the tokenizer will know that everything up until that cha
 It will then move on to creating the next token and once it finds the space after `t`, it creates the token `t`.
 And so this continues on until the tokenizer has gone through the whole string.
 
-##Defining our own delimiters with char_separator
+###Defining our own delimiters with char_separator
 
 It would be better to be able to define our own delimiters, so let's work with the code from [ex_2.cpp](https://github.com/vgarc018/cs100hw4/blob/master/src/ex_2.cpp)
 
@@ -68,8 +68,7 @@ char_separator<char> delim("&");
 tokenizer< char_separator<char> > mytok(str, delim);
 ```
 
-The `char_separator<char>` is one of the models of the boost tokenizer library.
-Declaring tokenizer with `char_separator<char>` lets boost know that we're going to use our own delimiters.
+The `char_separator<char>` is one of the models of the boost tokenizer library and declaring tokenizer with `char_separator<char>` lets boost know that we're going to use our own delimiters.
 Notice how the tokenizer function now has an extra parameter, `delim`, which will be our delimiter set.
 
 In this particular example, our delimiter set contains only `&`, so therefore our tokens will be separated only by this character.
@@ -79,6 +78,7 @@ So let's see what happens when we compile and run this code.
 ```
 $ g++ -std=c++11 ex_2.cpp -o ex_2
 $ ./ex_2
+Original string: Thou&&&&art&as    fat&as&&butter
 token: Thou
 token: art
 token: as    fat
@@ -87,9 +87,9 @@ token: butter
 ```
 
 Notice how even though there were multiple `&`'s, all of them were not outputted.
-But now this doesn't look like something useful since white space isn't being ignored.
+But now this doesn't look like something useful since white space isn't part of the delimiter set anymore.
 
-*Note:* There are other separators that can be used, but for this particular tutorial we're going to work with `char_separator<char>`.
+**Note:** There are other separators that can be used, but for this particular tutorial we're going to work with `char_separator<char>`.
 But check [the other separators](www.boost.org/doc/libs/1_57_0/libs/tokenizer/index.html) out if you want to see what else you can do with boost tokenizer.
 
 ###Multiple characters in our delimiter
@@ -104,6 +104,7 @@ Let's compile the code with this change and then execute it:
 ```
 $ g++ -std=c++11 ex_2.cpp -o ex_2
 $ ./ex_2
+Original string: Thou&&&&art&as    fat&as&&butter
 token: Thou
 token: art
 token: as
@@ -123,45 +124,31 @@ So if a character showed up one time in the set, then the tokenizer will know th
 Any other subsequent appearances of this character won't mean anything since the tokenizer would have already parsed the token after seeing the first one.
 This is why we keep referring to the `char_separator<char>` as the delimiter set, since it acts like a set.
 
-So if you wanted to parse a string like,
-
-`ls dir || cat file | tr a-z A-Z`
-
-and you didn't want to include the pipe `|` in your delimiter, having it contain `||` will *not* be recognized as something distinct to look for in parsing.
-Here's code to show what happens:
-
-***[ex_3.cpp](https://github.com/vgarc018/cs100hw4/blob/master/src/ex_3.cpp)***
+So looking at [ex_3.cpp](https://github.com/vgarc018/cs100hw4/blob/master/src/ex_3.cpp), we have the string and our delimiter set as:
 
 ```
-int main() {
-    string str = "ls dir || cat file | tr a-z A-Z";
-    char_separator<char> delim(" ||");
-    tokenizer< char_separator<char> > mytok(str, delim);
-
-    for(auto it = mytok.begin(); it != mytok.end(); ++it)
-        cout << *it << " ";
-    cout << endl;
-
-    return 0;
-}
+string str = "ls dir || cat file | tr a-z A-Z";
+char_separator<char> delim(" ||");
+tokenizer< char_separator<char> > mytok(str, delim);
 ```
 
+If you didn't want to include the pipe `|` in your delimiter, having it contain `||` will *not* be recognized as something distinct to look for in parsing.
+We'll output our tokens this time with spaces in between.
+So let's compile and run the program:
+
 ```
-$ g++ -std=c++11 ex_3.cpp -o ex_3
-$ ./ex_3
+$ g++ -std=c++11 ex_3.cpp -o ex_3 && ./ex_3
 ls dir cat file tr a-z A-Z
 ```
 
 ###Default delimiters
 
-What happens though if we didn't put anything into our delimiter?
-The default delimiter set for this type of tokenizer will contain only white space.
+What happens though if we didn't put anything into our delimiter set?
+The default delimiters for `char_separator<char>` model will contain only white space.
 Also, the non-letter/number characters are each treated as a token.
 Notice that this is different from `tokenizer<>`.
 
-Here's an example demonstrating this:
-
-***[ex_4.cpp](https://github.com/vgarc018/cs100hw4/blob/master/src/ex_4.cpp)***
+Here's an example demonstrating this using [ex_4.cpp](https://github.com/vgarc018/cs100hw4/blob/master/src/ex_4.cpp).
 
 ```
 int main() {
@@ -187,7 +174,8 @@ $ ./ex_4
 ```
 
 ##Going beyond with char_separator<char>
-Here are the basics of making a tokenizer with your own delimiters:
+
+Here are the basics of making a tokenizer with your own delimiters so far:
 
  - Create your own delimiter:
 
@@ -213,30 +201,22 @@ This will look like:
 
 `char_separator<char> delim(DROPPED_DELIM, KEPT_DELIM);`
 
-For example, we could have:
+Looking at [ex_5.cpp](https://github.com/vgarc018/cs100hw4/blob/master/src/ex_5.cpp), we have:
 
-`char_separator<char> delim("^| ", ";");`
+```
+string str = "I;m test^ing this || out;";
+char_separator<char> delim("^| ", ";");
+```
 
 which will separate tokens by the delimiters `^| ;` and will also make `;` a token.
-Here's some code demonstrating this:
-
-***[ex_5.cpp](https://github.com/vgarc018/cs100hw4/blob/master/src/ex_5.cpp)***
+The rest of the code will output our tokens in between `( )` to help clarify which are the tokens.
 
 ```
-int main() {
-    char_separator<char> delim("^| ", ";");
-    string str = "I;m test^ing this || out;";
-    cout << "Original string: " << str << endl;
-
-    tokenizer< char_separator<char> > mytok(str, delim);
-
-    for(auto it = mytok.begin(); it != mytok.end(); ++it)
-        cout << "(" << *it << ")" << " ";
-
-    return 0;
-}
+cout << "Original string: " << str << endl;
+tokenizer< char_separator<char> > mytok(str, delim);
+for(auto it = mytok.begin(); it != mytok.end(); ++it)
+    cout << "(" << *it << ")" << " ";
 ```
-
 ```
 $ g++ -std=c++11 ex_5.cpp -o ex_5
 $ ./ex_5
