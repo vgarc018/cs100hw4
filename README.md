@@ -60,7 +60,7 @@ And so this continues on until the tokenizer has gone through the whole string.
 
 ###Defining our own delimiters with char_separator
 
-It would be better to be able to define our own delimiters, so let's work with the code from [ex_2.cpp](https://github.com/vgarc018/cs100hw4/blob/master/src/ex_2.cpp)
+It would be better to be able to define our own delimiters, so let's work with the code from [ex_2.cpp](https://github.com/vgarc018/cs100hw4/blob/master/src/ex_2.cpp).
 
 ```
 string str = "Thou&&&&art&as    fat&as&&butter";
@@ -95,7 +95,7 @@ But check [the other separators](www.boost.org/doc/libs/1_57_0/libs/tokenizer/in
 ###Multiple characters in our delimiter
 
 The `char_separator<char>` model of boost tokenizer is able to take in multiple characters.
-So let's change our delimiter set in ex_2.cpp to this:
+So let's change our delimiter set from the previous example, ex_2.cpp, to this:
 
 `char_separator<char> delim(" &");`
 
@@ -134,7 +134,7 @@ tokenizer< char_separator<char> > mytok(str, delim);
 
 If you didn't want to include the pipe `|` in your delimiter, having it contain `||` will *not* be recognized as something distinct to look for in parsing.
 We'll output our tokens this time with spaces in between.
-So let's compile and run the program:
+So let's compile and run the program to see what we will get:
 
 ```
 $ g++ -std=c++11 ex_3.cpp -o ex_3 && ./ex_3
@@ -236,7 +236,7 @@ But there was nothing that was actually put into this token and thus we have an 
 
 Tokenizers such as `strtok` will not output these empty tokens but maybe it might be useful to know where these empty tokens are, so the boost tokenizer gives us this option.
 In order to do this, `keep_empty_tokens` must be passed in as the third paramter for `char_separator<char>.`
-Let's use the ex_5.cpp again and change our delimiter to:
+Let's use the previous example, ex_5.cpp, again and change our delimiter to:
 
 `char_separator<char> delim("^| ", ";", keep_empty_tokens);`
 
@@ -276,8 +276,8 @@ explicit char_separator(const char* dropped_delims,
                         empty_token_policy empty_tokens = drop_empty_tokens)
 ```
 
-The `dropped_delims` parameters must always be passed in, otherwise `kept_delims` and `empty_tokens` are already set to defaults.
-In order to use `kept_delims`, we simply pass in what delimiters we want to keep, and in order to keep empty tokens we pass in `keep_empty_tokens` for `empty_tokens`.
+The `dropped_delim` parameters must always be passed in, otherwise `kept_delims` and `empty_tokens` are already set to defaults.
+In order to use `kept_delims`, we simply pass in what delimiters we want to keep, and in order to use empty tokens we pass in `keep_empty_tokens` for `empty_tokens`.
 
 References:
 
