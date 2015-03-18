@@ -134,7 +134,7 @@ token: butter
 Notice how even though there were multiple `&`'s, all of them were not outputted.
 But now this doesn't look like something useful since white space isn't being ignored.
 
-***Multiple characters in our delimiter***
+###Multiple characters in our delimiter
 
 The `char_separator<char>` model of boost tokenizer is able to take in multiple characters.
 So let's change our delimiter set in ex_2.cpp to this:
@@ -158,7 +158,7 @@ token: butter
 Now this looks better, but keep in mind that this delimiter set does not contain *all* white space.
 Try looking up [ASCII character codes](http://www.petefreitag.com/cheatsheets/ascii-codes/) for other types of white space (and other miscellaneous characters that you might need).
 
-***Repeated characters in our delimiter***
+###Repeated characters in our delimiter
 
 What if our delimiter set contains reapeated characters?
 We explained earlier how a tokenizer will match the text with the delimiters to know where to separate tokens, and because this boost tokenizer deals with only characters, the tokenizer will look in the set and match a character to a character.
@@ -195,14 +195,14 @@ $ ./ex_3
 ls dir cat file tr a-z A-Z
 ```
 
-***Default delimiters***
+###Default delimiters
 
 What happens though if we didn't put anything into our delimiter?
 The default delimiter set for this type of tokenizer will contain only white space.
 Also, the non-letter/number characters are each treated as a token.
 Notice that this is different from `tokenizer<>`.
 
-Here's an example demonstrating this point:
+Here's an example demonstrating this:
 
 ***[ex_4.cpp](https://github.com/vgarc018/cs100hw4/blob/master/src/ex_4.cpp)***
 
@@ -248,7 +248,7 @@ This is where boost tokenizer really differentiates from the `strtok` function s
 
 **Note:** If you're unfamiliar with `strtok`, check out this [tutorial](https://github.com/mikeizbicki/ucr-cs100/tree/2015winter/textbook/assignment-help/strtok).
 
-***Kept delimiters***
+###Kept delimiters
 
 So far, we have been working with the *dropped delimiters* of `char_separator<char>`, which are the delimiters that do not become tokens.
 `char_separator<char>` actually has another parameter to specify the *kept delimiters*, which will be the delimiters that do become tokens.
@@ -287,7 +287,7 @@ Original string: I;m test^ing this || out;
 (I) (;) (m) (test) (ing) (this) (out) (;)
 ```
 
-***Empty tokens***
+###Empty tokens
 
 Recall that when a tokenizer goes through a string it will separate tokens by the delimiters.
 But what if there are multiple delimiters right next to each other?
