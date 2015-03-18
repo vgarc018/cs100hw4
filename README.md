@@ -320,9 +320,12 @@ Do not forget to declare these things before using the tokenizer:
 ```
 #include <boost/tokenizer.hpp>
 using namespace boost;
+
 //if you want to declare a delimeter instead of the default
 char_separator<char> delim("&");
+tokenizer< char_separator<char> > mytok(str, delim);
 
+//else just declare it like this
 tokenizer<> mytok(str);
 ```
 
