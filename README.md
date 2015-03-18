@@ -3,16 +3,9 @@
 A tokenizer extracts meaningful substrings from a string.
 These substrings are called tokens.
 Tokenizing makes life easier when you want to break up a string.
-For example, you can tokenize the string `Get thee to a nunnery`, which will be broken up into the tokens:
-```
-Get
-thee
-to
-a
-nunnery
-```
+For example, you can tokenize the string `Get thee to a nunnery`, which will be broken up into the tokens: `Get`, `thee`, `to`, `a`, and `nunnery`.
 
-##How do we do this?
+##How do we do use the boost tokenizer?
 
 Let's look at the src code from [ex1.cpp](https://github.com/vgarc018/cs100hw4/blob/master/src/ex_1.cpp).
 
@@ -65,42 +58,23 @@ Once it finds a match, the tokenizer will know that everything up until that cha
 It will then move on to creating the next token and once it finds the space after `t`, it creates the token `t`.
 And so this continues on until the tokenizer has gone through the whole string.
 
-##Defining our own delimiters
+##Defining our own delimiters with char_separator
 
-But again, we want to know how to pass in our own delimiters, so let's work with this string to see how we can define our own:
-
-`string str = "Thou&&&&art&as     fat&as&&butter";`
-
-The boost tokenizer function will need to know that we're making our own delimiter, so we use `char_separator<char>` from the boost library like this:
-
-`tokenizer< char_separator<char> > mytok(str, delim);`
-
-*Note:* There are other separators that can be used, but for this particular tutorial we're going to work with `char_separator<char>`.
-But check [the other separators](www.boost.org/doc/libs/1_57_0/libs/tokenizer/index.html) out if you want to see what else you can do with boost tokenizer.
-
-Notice how when we declare our `mytok` tokenizer there is an extra parameter, `delim`, which is the name of our delimiter set.
-So we'll need to declare and specify what our delimiters will be beforehand and we do this,
-
-`char_separator<char> delim("&");`
-
-where `&` is the thing the tokenizer will look for to separate the tokens.
-It's also very important to note that the `char_separator<char>` tokenizer model is also only working with characters, and we'll see in a moment why this matters.
-So let's see an example of this:
-
-***[ex_2.cpp](https://github.com/vgarc018/cs100hw4/blob/master/src/ex_2.cpp)***
+It would be better to be able to define our own delimiters, so let's work with the code from [ex_2.cpp](https://github.com/vgarc018/cs100hw4/blob/master/src/ex_2.cpp)
 
 ```
-int main() {
-    string str = "Thou&&&&art&as    fat&as&&butter";
-    char_separator<char> delim("&");
-    tokenizer< char_separator<char> > mytok(str, delim);
-
-    for(auto it = mytok.begin(); it != mytok.end(); ++it)
-        cout << "token: " << *it << endl;
-
-    return 0;
-}
+string str = "Thou&&&&art&as    fat&as&&butter";
+char_separator<char> delim("&");
+tokenizer< char_separator<char> > mytok(str, delim);
 ```
+
+The `char_separator<char>` is one of the models of the boost tokenizer library.
+Declaring tokenizer with `char_separator<char>` lets boost know that we're going to use our own delimiters.
+Notice how the tokenizer function now has an extra parameter, `delim`, which will be our delimiter set.
+
+In this particular example, our delimiter set contains only `&`, so therefore our tokens will be separated only by this character.
+
+So let's see what happens when we compile and run this code.
 
 ```
 $ g++ -std=c++11 ex_2.cpp -o ex_2
@@ -114,6 +88,9 @@ token: butter
 
 Notice how even though there were multiple `&`'s, all of them were not outputted.
 But now this doesn't look like something useful since white space isn't being ignored.
+
+*Note:* There are other separators that can be used, but for this particular tutorial we're going to work with `char_separator<char>`.
+But check [the other separators](www.boost.org/doc/libs/1_57_0/libs/tokenizer/index.html) out if you want to see what else you can do with boost tokenizer.
 
 ###Multiple characters in our delimiter
 
@@ -133,7 +110,6 @@ token: as
 token: fat
 token: as
 token: butter
-
 ```
 
 Now this looks better, but keep in mind that this delimiter set does not contain *all* white space.
