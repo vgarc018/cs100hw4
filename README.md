@@ -1,27 +1,22 @@
 #The Boost Library Tokenizer
 
-A tokenizer takes a sequence such as a string and turns it into a sequence of tokens, which are meaningful character strings.
+A tokenizer extracts meaningful substrings from a string.
+These substrings are called tokens.
 Tokenizing makes life easier when you want to break up a string.
-Luckily, boost provides a tokenizer library that can do this.
-For example, you can take this string
-
-`string str = "Don't panic, too much."`
-
-which will be broken up into the tokens:
+For example, you can tokenize the string `Get thee to a nunnery`, which will be broken up into the tokens:
 ```
-Don
-t
-panic
-too
-much
+Get
+thee
+to
+a
+nunnery
 ```
-Notice how the `'` `,` and the `.` were not outputted.
 
 ##How do we do this?
 
-Let's just go straight into the code:
+Let's look at the src code from [ex1.cpp](https://github.com/vgarc018/cs100hw4/blob/master/src/ex_1.cpp).
 
-***[ex_1.cpp](https://github.com/vgarc018/cs100hw4/blob/master/src/ex_1.cpp)***
+The first thing we'll have to do is include the boost tokenizer library and use the boost namespace.
 
 ```
 #include <iostream>
@@ -30,7 +25,11 @@ Let's just go straight into the code:
 
 using namespace std;
 using namespace boost;
+```
 
+Then we call the tokenizer function like this and use iterators to traverse through the tokens.
+
+```
 int main() {
     string str = "Don't panic, too much. 12,34";
     tokenizer<> mytok(str);
@@ -39,6 +38,8 @@ int main() {
     return 0;
 }
 ```
+
+So now let's compile and run this.
 
 ```
 $ g++ -std=c++11 ex_1.cpp -o ex_1
@@ -51,32 +52,12 @@ much
 12
 34
 ```
-**Note:** The `auto` feature is part of the c++11 standard, so check out this [tutorial](http://en.cppreference.com/w/cpp/language/auto) if you need help.
-But if you don't have c++11, then you'll have to replace `auto` with `tokenizer<>::iterator`.
 
-So first, in order to use boost tokenizer we need to include the library.
-
-```
-#include <boost/tokenizer.hpp>
-using namespace boost;
-```
-Then in order to call the function we declare:
-
-`tokenizer<> mytok(str);`
-
-where `mytok` is the name of the tokenizer and `str` is the sequence of characters that we want to parse.
-Finally, we use iterators to traverse through the tokens.
 However, the way this tokenizer is parsing isn't particularly useful.
-But we can control how the boost tokenizer parses by defining something which is known as a *delimiter.*
+But we can control how the boost tokenizer parses by defining something which is known as a delimiter.
 
-##So what's a delimiter and why is it useful?
-***How the tokenizer uses the delimiter***
-
-A delimiter is a sequence of one or more characters that separate texts, and a tokenizer looks at what delimiters are passed in so that it can know where to separate the tokens.
-So for the previous tokenizer example, we can say that the default delimiters are white space and all non-letter/number characters.
-Just for reference, our string was:
-
-`string str = "Don't panic, too much. 12,34";`
+A ***delimiter*** is a sequence of one or more characters that separate tokens, and a tokenizer looks at what delimiters are passed in so that it can know where to separate the tokens.
+So for this example, we can say that the default delimiters are white space and all non-letter/number characters.
 
 To explain in detail how this string got parsed, it should be noted that `tokenizer<>` parses by characters.
 So this tokenizer will go through each character in the string and it will check to see if it is in the delimiter set.
@@ -84,7 +65,7 @@ Once it finds a match, the tokenizer will know that everything up until that cha
 It will then move on to creating the next token and once it finds the space after `t`, it creates the token `t`.
 And so this continues on until the tokenizer has gone through the whole string.
 
-***Defining our own***
+##Defining our own delimiters
 
 But again, we want to know how to pass in our own delimiters, so let's work with this string to see how we can define our own:
 
