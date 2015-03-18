@@ -309,3 +309,29 @@ Original string: I;m test^ing this || out;
 (I) (;) (m) (test) (ing) (this) () () () (out) (;) ()
 
 ```
+
+
+##Bringing it all together
+
+The Boost tokenizer provides an easy way to parse through a string.
+
+Do not forget to declare these things before using the tokenizer:
+
+```
+#include <boost/tokenizer.hpp>
+using namespace boost;
+//if you want to declare a delimeter instead of the default
+char_separator<char> delim("&");
+
+tokenizer<> mytok(str);
+```
+
+The tokenizer provides interesting features that will make your programming life a lot easier.
+
+References:
+
+[Boost Library Documentation](www.boost.org/doc/libs/1_57_0/libs/tokenizer/index.html)
+
+[ASCII Codes](http://www.petefreitag.com/cheatsheets/ascii-codes/)
+
+[CPP Reference](http://en.cppreference.com/w/cpp/language/auto)
