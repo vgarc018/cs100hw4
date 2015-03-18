@@ -5,16 +5,17 @@
 
 using namespace std;
 using namespace boost;
-    
+
 int main() {
-   string str = "I'm getting pretty good at this.";
-   vector<string> v;
-   tokenizer<> tok(str);
-    
-   for(auto it = tok.begin(); it != tok.end(); ++it) {
-	    v.push_back(*it);
-	    cout << *it << ' ';
-	}
-		cout << endl;
-	    return 0;
+    string str = "Thou&&&&art&as    fat&as&&butter";
+    char_separator<char> delim("&");
+    tokenizer< char_separator<char> > mytok(str, delim);
+
+    for(auto it = mytok.begin(); it != mytok.end(); ++it)
+        cout << "token: " << *it << endl;
+
+
+    return 0;
+
 }
+

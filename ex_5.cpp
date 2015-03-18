@@ -9,14 +9,14 @@ using namespace boost;
 typedef tokenizer<char_separator<char> > mytok;
 
 int main() {
-    string str = "ls dir || cat file | tr a-z A-Z";
-    char_separator<char> delim(" ||");
+    char_separator<char> delim("^| ", ";");
+    string str = "I;m test^ing this || out;";
+    cout << "Original string: " << str << endl;
+
     tokenizer< char_separator<char> > mytok(str, delim);
 
     for(auto it = mytok.begin(); it != mytok.end(); ++it)
-        cout << *it << " ";
-
-    cout << endl;
+        cout << "(" << *it << ")" << " ";
 
     return 0;
 
