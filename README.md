@@ -236,7 +236,7 @@ But there was nothing that was actually put into this token and thus we have an 
 
 Tokenizers such as `strtok` will not output these empty tokens but maybe it might be useful to know where these empty tokens are, so the boost tokenizer gives us this option.
 In order to do this, `keep_empty_tokens` must be passed in as the third paramter for `char_separator<char>.`
-Let's use the previous example, ex_5.cpp, again and change our delimiter to:
+Let's use the previous example, ex_5.cpp, and change our delimiter to:
 
 `char_separator<char> delim("^| ", ";", keep_empty_tokens);`
 
