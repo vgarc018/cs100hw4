@@ -21,7 +21,7 @@ Notice how the `'` `,` and the `.` were not outputted.
 
 Let's just go straight into the code:
 
-***ex_1.cpp***
+***[ex_1.cpp](https://github.com/vgarc018/cs100hw4/blob/master/src/ex_1.cpp)***
 
 ```
 #include <iostream>
@@ -51,7 +51,7 @@ much
 12
 34
 ```
-**Note:** The `auto` feature is part of the c++11 standard, so check out this tutorial if you need help with that (insert tutorial link in here later).
+**Note:** The `auto` feature is part of the c++11 standard, so check out this [tutorial](http://en.cppreference.com/w/cpp/language/auto) if you need help.
 But if you don't have c++11, then you'll have to replace `auto` with `tokenizer<>::iterator`.
 
 So first, in order to use boost tokenizer we need to include the library.
@@ -106,7 +106,7 @@ where `&` is the thing the tokenizer will look for to separate the tokens.
 It's also very important to note that the `char_separator<char>` tokenizer model is also only working with characters, and we'll see in a moment why this matters.
 So let's see an example of this:
 
-***ex_2.cpp***
+***[ex_2.cpp](https://github.com/vgarc018/cs100hw4/blob/master/src/ex_2.cpp)***
 
 ```
 int main() {
@@ -173,7 +173,7 @@ So if you wanted to parse a string like,
 and you didn't want to include the pipe `|` in your delimiter, having it contain `||` will *not* be recognized as something distinct to look for in parsing.
 Here's code to show what happens:
 
-***ex_3.cpp***
+***[ex_3.cpp](https://github.com/vgarc018/cs100hw4/blob/master/src/ex_3.cpp)***
 
 ```
 int main() {
@@ -204,7 +204,7 @@ Notice that this is different from `tokenizer<>`.
 
 Here's an example demonstrating this point:
 
-***ex_4.cpp***
+***[ex_4.cpp](https://github.com/vgarc018/cs100hw4/blob/master/src/ex_4.cpp)***
 
 ```
 int main() {
@@ -263,7 +263,7 @@ For example, we could have:
 which will separate tokens by the delimiters `^| ;` and will also make `;` a token.
 Here's some code demonstrating this:
 
-***ex_5.cpp***
+***[ex_5.cpp](https://github.com/vgarc018/cs100hw4/blob/master/src/ex_5.cpp)***
 
 ```
 int main() {
