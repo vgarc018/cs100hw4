@@ -9,8 +9,9 @@ using namespace boost;
 typedef tokenizer<char_separator<char> > mytok;
 
 int main() {
-    char_separator<char> delim("^| ", ";");
     string str = "I;m test^ing this || out;";
+    char_separator<char> delim("^| ", ";");
+    //char_separator<char> delim("^| ", ";", keep_empty_tokens);
     cout << "Original string: " << str << endl;
 
     tokenizer< char_separator<char> > mytok(str, delim);

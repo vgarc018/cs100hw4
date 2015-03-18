@@ -209,7 +209,7 @@ char_separator<char> delim("^| ", ";");
 ```
 
 which will separate tokens by the delimiters `^| ;` and will also make `;` a token.
-The rest of the code will output our tokens in between `( )` to help clarify which are the tokens.
+The rest of the code in ex_5.cpp will output our tokens in between `( )` to help clarify which are the tokens.
 
 ```
 cout << "Original string: " << str << endl;
@@ -233,9 +233,10 @@ Say we have this string `c&&ar` where our delimiter is `&`.
 When the tokenizer reaches the first `&`, it will know that `c` is a token.
 Then it will start working on the next token, but it will find another `&` right after and it will think, that's the end of the token.
 But there was nothing that was actually put into this token and thus we have an **empty token**.
-Tokenizers such as `strtok` will not output these empty tokens but maybe it might be useful to know where these empty tokens are, the boost tokenizer gives us this option.
+
+Tokenizers such as `strtok` will not output these empty tokens but maybe it might be useful to know where these empty tokens are, so the boost tokenizer gives us this option.
 In order to do this, `keep_empty_tokens` must be passed in as the third paramter for `char_separator<char>.`
-Let's use the previous example and change our delimiter to:
+Let's use the ex_5.cpp again and change our delimiter to:
 
 `char_separator<char> delim("^| ", ";", keep_empty_tokens);`
 
@@ -244,9 +245,8 @@ Compiling and running with this change will give us:
 ```
 Original string: I;m test^ing this || out;
 (I) (;) (m) (test) (ing) (this) () () () (out) (;) ()
-
 ```
-
+where the parentheses with nothing in between them are our empty tokens.
 
 ##Bringing it all together
 
@@ -266,12 +266,19 @@ tokenizer< char_separator<char> > mytok(str, delim);
 tokenizer<> mytok(str);
 ```
 
-The tokenizer provides interesting features that will make your programming life a lot easier.
+Our `char_separator<char>` model also has extra features that other tokenizing functions such as `strtok` do not have.
+
+The model has the parameters set like this:
+
+```
+explicit char_separator(const char* dropped_delims,
+                        const char* kept_delims = "",
+                        empty_token_policy empty_tokens = drop_empty_tokens)
+```
+
+The `dropped_delims` parameters must always be passed in, otherwise `kept_delims` and `empty_tokens` are already set to defaults.
+In order to use `kept_delims`, we simply pass in what delimiters we want to keep, and in order to keep empty tokens we pass in `keep_empty_tokens` for `empty_tokens`.
 
 References:
 
 [Boost Library Documentation](www.boost.org/doc/libs/1_57_0/libs/tokenizer/index.html)
-
-[ASCII Codes](http://www.petefreitag.com/cheatsheets/ascii-codes/)
-
-[CPP Reference](http://en.cppreference.com/w/cpp/language/auto)
