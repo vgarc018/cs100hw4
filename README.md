@@ -209,7 +209,7 @@ char_separator<char> delim("^| ", ";");
 ```
 
 which will separate tokens by the delimiters `^| ;` and will also make `;` a token.
-The rest of the code in ex_5.cpp will output our tokens in between `( )` to help clarify which are the tokens.
+The rest of the code in [ex_5.cpp](https://github.com/vgarc018/cs100hw4/blob/master/src/ex_5.cpp) will output our tokens in between `( )` to help clarify which are the tokens.
 
 ```
 cout << "Original string: " << str << endl;
