@@ -90,12 +90,12 @@ Notice how even though there were multiple `&`'s, all of them were not outputted
 But now this doesn't look like something useful since white space isn't part of the delimiter set anymore.
 
 **Note:** There are other separators that can be used, but for this particular tutorial we're going to work with `char_separator<char>`.
-But check [the other separators](www.boost.org/doc/libs/1_57_0/libs/tokenizer/index.html) out if you want to see what else you can do with boost tokenizer.
+But check [the other separators](http://www.boost.org/doc/libs/1_57_0/libs/tokenizer/index.html) out if you want to see what else you can do with boost tokenizer.
 
 ###Multiple characters in our delimiter
 
 The `char_separator<char>` model of boost tokenizer is able to take in multiple characters.
-So let's change our delimiter set from the previous example, ex_2.cpp, to this:
+So let's change our delimiter set from the previous example, [ex_2.cpp](https://github.com/vgarc018/cs100hw4/blob/master/src/ex_2.cpp), to this:
 
 `char_separator<char> delim(" &");`
 
@@ -148,24 +148,24 @@ The default delimiters for `char_separator<char>` model will contain only white 
 Also, the non-letter/number characters are each treated as a token.
 Notice that this is different from `tokenizer<>`.
 
-Here's an example demonstrating this using [ex_4.cpp](https://github.com/vgarc018/cs100hw4/blob/master/src/ex_4.cpp).
+
+Using [ex_4.cpp](https://github.com/vgarc018/cs100hw4/blob/master/src/ex_4.cpp), we have:
 
 ```
-int main() {
-    string str = "12*34 I, declare a&&thumb    !war";
-    char_separator<char> delim;
-    tokenizer< char_separator<char> > mytok(str, delim);
-
-    //This also behaves the same
-    //tokenizer< char_separator<char> > mytok(str);
-
-    for(auto it = mytok.begin(); it != mytok.end(); ++it)
-        cout << *it << " ";
-    cout << endl;
-
-    return 0;
-}
+string str = "12*34 I, declare a&&thumb    !war";
+char_separator<char> delim;
+tokenizer< char_separator<char> > mytok(str, delim);
 ```
+
+where we didn't put anything into our set.
+Similarly, we could also opt to not pass in `delim` into our function like this,
+
+```
+tokenizer< char_separator<char> > mytok(str);
+```
+
+and achieve the same results.
+Let's compile and run ex_4.cpp to see how the tokens will look, where each token will be separated by a space:
 
 ```
 $ g++ -std=c++11 ex_4.cpp -o ex_4
@@ -173,7 +173,7 @@ $ ./ex_4
 12 * 34 I, declare a & & thumb ! war
 ```
 
-##Going beyond with char_separator<char>
+##Going beyond with char_separator
 
 Here are the basics of making a tokenizer with your own delimiters so far:
 
@@ -276,7 +276,7 @@ explicit char_separator(const char* dropped_delims,
                         empty_token_policy empty_tokens = drop_empty_tokens)
 ```
 
-The `dropped_delim` parameters must always be passed in, otherwise `kept_delims` and `empty_tokens` are already set to defaults.
+The `dropped_delim` parameter should always be passed in but if it wasn't, boost tokenizer will still parse the string.  Otherwise `kept_delims` and `empty_tokens` are already set to defaults and are optional traits.
 In order to use `kept_delims`, we simply pass in what delimiters we want to keep, and in order to use empty tokens we pass in `keep_empty_tokens` for `empty_tokens`.
 
 References:
